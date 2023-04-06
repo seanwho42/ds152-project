@@ -19,19 +19,23 @@ def transcribe(parent_genome):
 def translate(genome):
     # turns (translates) 21 character string into 7 parameters based on each codon.
     codons = []
-    size_codon = genome[0:3]
-    speed_codon = genome[3:6]
+    r_codon = genome[0:3]
+    g_codon = genome[3:6]
+    b_codon = genome[6:9]
+    size_codon = genome[9:12]
+    speed_codon = genome[12:15]
     reproduction_rate_codon = genome[15:18]
     n_offspring_codon = genome[18:21]
-    r_codon = genome[6:9]
-    g_codon = genome[9:12]
-    b_codon = genome[12:15]
-    print(size_codon, speed_codon, r_codon, g_codon, b_codon, reproduction_rate_codon, n_offspring_codon)
-    print(codon_to_number(size_codon),
+    run_variance_codon = genome[21:24] # variance in direction running away from the predator
+
+    # print(size_codon, speed_codon, r_codon, g_codon, b_codon, reproduction_rate_codon, n_offspring_codon)
+    return (color_from_codons(codon_to_number(r_codon), codon_to_number(g_codon), codon_to_number(b_codon)),
+          codon_to_number(size_codon),
           codon_to_number(speed_codon),
           codon_to_number(reproduction_rate_codon),
           codon_to_number(n_offspring_codon),
-          color_from_codons(codon_to_number(r_codon), codon_to_number(g_codon), codon_to_number(b_codon)))
+          codon_to_number(run_variance_codon) * 90/63 # convert to range within 90 degrees
+          )
 
 def codon_to_number(codon):
     number_str = ""
